@@ -583,43 +583,52 @@ def goruntu_isleme_modulu():
 
 # 🎭 Sonuç Dialog Penceresi
 class SonucDialog(ctk.CTkToplevel):
-    def __init__(self, parent, title, message, metin_kopyalama=False):
+    def __init__(self, parent, title, message, metin_kopyalama=False, analiz_butonu=False):
         super().__init__(parent)
         self.title(title)
         self.geometry("600x400")
         self.resizable(False, False)
         self.grab_set()  # Modal pencere
-        
+
         # Başlık
         baslik = ctk.CTkLabel(self, text=title, font=("Segoe UI", 20, "bold"))
         baslik.pack(pady=20)
-        
+
         # Mesaj alanı
         self.mesaj_alani = ctk.CTkTextbox(self, width=560, height=250, font=("Segoe UI", 12))
         self.mesaj_alani.pack(padx=20, pady=10)
         self.mesaj_alani.insert("0.0", message)
-        
+
         if not metin_kopyalama:
             self.mesaj_alani.configure(state="disabled")  # Salt okunur
-        
+
         # Butonlar
         buton_frame = ctk.CTkFrame(self, fg_color="transparent")
         buton_frame.pack(pady=20)
-        
+
         if metin_kopyalama:
             kopyala_btn = ctk.CTkButton(buton_frame, text="📋 Kopyala", fg_color=renk_mavi,
-                                     command=self.kopyala, width=120)
+                                        command=self.kopyala, width=120)
             kopyala_btn.pack(side="left", padx=10)
-        
+
+        if analiz_butonu:
+            analiz_btn = ctk.CTkButton(buton_frame, text="🔍 Analiz Et", fg_color="orange",
+                                       command=self.analiz_et, width=120)
+            analiz_btn.pack(side="left", padx=10)
+
         tamam_btn = ctk.CTkButton(buton_frame, text="✅ Tamam", fg_color=renk_yesil,
-                                command=self.destroy, width=120)
+                                  command=self.destroy, width=120)
         tamam_btn.pack(side="left", padx=10)
-    
+
     def kopyala(self):
         icerik = self.mesaj_alani.get("0.0", "end")
         self.clipboard_clear()
         self.clipboard_append(icerik.strip())
         messagebox.showinfo("Kopyalandı", "Metin panoya kopyalandı!")
+
+    def analiz_et(self):
+        # Buraya analiz işlemi yapılacak fonksiyonlar eklenebilir
+        messagebox.showinfo("Analiz", "Analiz işlemi başlatıldı (örnek).")
 
 # 📌 Yardım ve Hakkında
 def yardim_goster():
@@ -651,7 +660,7 @@ def sosyal_medya(tur):
         "linkedin": "https://linkedin.com/in/resuldemir",
         "website": "https://resuldemir.com"
     }
-    webbrowser.open(linkler.get(tur, "https://github.com/resuldemir"))
+    webbrowser.open(linkler.get(tur, "https://github.com/resuldemir123"))
 
 # 🎨 Arayüz Bileşenleri
 # Başlık çerçevesi
